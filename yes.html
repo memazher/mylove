@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask Her Out</title>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <audio autoplay loop id="music">
+    <source src="music/love2.mp3" type="audio/mp3">
+  </audio>
+<div class="floating-hearts" id="floatingHearts"></div>
+
+
+    <div class="container">
+      <div
+        class="tenor-gif-embed"
+        data-postid="253027946666209433"
+        data-share-method="host"
+        data-aspect-ratio="1.37853"
+        data-width="100%"
+      >
+        <a
+          href="https://tenor.com/view/mochi-cat-mochi-and-goma-goma-and-peach-mochi-mochi-peach-cat-gif-gif-253027946666209433"
+          >Mochi Cat GIF</a
+        >from <a href="https://tenor.com/search/mochi-gifs">Mochi GIFs</a>
+      </div>
+      <script
+        type="text/javascript"
+        async
+        src="https://tenor.com/embed.js"
+      ></script>
+      <h1>Hehehehe, I knew it! 😘</h1>
+    </div>
+<script>
+const bgHearts = document.getElementById("floatingHearts");
+
+// Increase quantity (more frequent spawn)
+setInterval(()=>{
+    
+    // Create multiple hearts at once
+    for(let i=0; i<3; i++){
+
+        let heart = document.createElement("div");
+        heart.className = "bg-heart";
+
+        // Mix different heart styles
+        const heartsArray = ["💖","💗","💕","💘"];
+        heart.innerHTML = heartsArray[Math.floor(Math.random()*heartsArray.length)];
+
+        heart.style.left = Math.random()*100 + "%";
+        heart.style.fontSize = (Math.random()*25 + 15) + "px";
+        heart.style.animationDuration = (Math.random()*6 + 4) + "s";
+
+        bgHearts.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },10000);
+    }
+
+},100); // 🔥 was 700 — now 300 (more hearts)
+
+</script>
+
+  </body>
+</html>

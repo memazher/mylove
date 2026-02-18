@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ask Her Out</title>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <style>
+    .btn a:last-child{
+  position: relative;
+}
+
+  </style>
+  <body>
+<div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="container">
+      <div
+        class="tenor-gif-embed"
+        data-postid="15974530976611222074"
+        data-share-method="host"
+        data-aspect-ratio="1.26923"
+        data-width="100%"
+      >
+        <a
+          href="https://tenor.com/view/peach-goma-phone-gif-15974530976611222074"
+          >Peach Goma Phone Sticker</a
+        >from
+        <a href="https://tenor.com/search/peach+goma-stickers"
+          >Peach Goma Stickers</a
+        >
+      </div>
+      <script
+        type="text/javascript"
+        async
+        src="https://tenor.com/embed.js"
+      ></script>
+
+      <h1>Maan jao na! Kitna bhav khaoge ap 😭</h1>
+ 
+
+      <div class="btn">
+        <a href="yes.html">Yes</a>
+        <a href="#" id="move-random">No</a>
+      </div>
+    </div>
+
+    <script src="./script.js"></script>
+<script>
+const bgHearts = document.getElementById("floatingHearts");
+
+// Increase quantity (more frequent spawn)
+setInterval(()=>{
+    
+    // Create multiple hearts at once
+    for(let i=0; i<3; i++){
+
+        let heart = document.createElement("div");
+        heart.className = "bg-heart";
+
+        // Mix different heart styles
+        const heartsArray = ["💖","💗","💕","💘"];
+        heart.innerHTML = heartsArray[Math.floor(Math.random()*heartsArray.length)];
+
+        heart.style.left = Math.random()*100 + "%";
+        heart.style.fontSize = (Math.random()*25 + 15) + "px";
+        heart.style.animationDuration = (Math.random()*6 + 4) + "s";
+
+        bgHearts.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },10000);
+    }
+
+},300); // 🔥 was 700 — now 300 (more hearts)
+const noBtn = document.querySelector(".btn a:last-child");
+
+noBtn.addEventListener("mouseover", () => {
+  const x = Math.random() * 200 - 100;
+  const y = Math.random() * 200 - 100;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+</script>
+  </body>
+</html>

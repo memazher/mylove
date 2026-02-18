@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Love Letter</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    min-height:100vh;
+    background:linear-gradient(135deg,#ffd6e8,#ffeaf4);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Quicksand', sans-serif;
+    padding:20px;
+    overflow:hidden;
+}
+
+
+/* Envelope container */
+.envelope-container{
+    position:relative;
+    width:90%;
+    max-width:380px;
+    aspect-ratio: 380 / 260;
+    perspective:1000px;
+    cursor:pointer;
+}
+
+
+/* Envelope body */
+.envelope{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#ffb6d9;
+    border-radius:12px;
+    box-shadow:0 25px 50px rgba(255,105,180,0.4);
+    overflow:hidden;
+}
+
+/* Bottom triangle */
+.envelope::before{
+    content:"";
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background:#ff99cc;
+    clip-path:polygon(0 100%,50% 60%,100% 100%);
+}
+
+/* Flap */
+.flap{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:#ff85c1;
+    clip-path:polygon(0 0,50% 65%,100% 0);
+    transform-origin:top;
+    transition:transform 1.2s ease;
+    z-index:4;
+    backface-visibility:hidden;
+}
+
+/* Heart seal */
+.seal{
+    position:absolute;
+    width:55px;
+    height:55px;
+    background:#e91e63;
+    border-radius:50%;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -20%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    font-size:22px;
+    z-index:5;
+    box-shadow:0 8px 20px rgba(233,30,99,0.5);
+    transition:opacity 0.5s ease;
+}
+
+
+/* Letter */
+.letter{
+    position:absolute;
+    width:88%;
+    max-height:65%;
+    height:auto;
+    left:6%;
+    bottom:-100%;
+    border-radius:10px;
+    padding:clamp(15px, 4vw, 20px);
+    box-sizing:border-box;
+    box-shadow:0 15px 30px rgba(0,0,0,0.15);
+    transition:bottom 1.2s ease;
+    z-index:2;
+    overflow:auto;
+}
+
+/* Open state */
+.open .flap{
+    transform:rotateX(-180deg);
+}
+
+.open .letter{
+    bottom:15%;
+}
+
+
+.open .seal{
+    opacity:0;
+}
+
+/* Text styling */
+h2{
+    font-size:clamp(20px, 6vw, 28px);
+}
+
+p{
+    font-size:clamp(13px, 3.5vw, 15px);
+}
+
+.close-btn{
+    margin-top:15px;
+    padding:8px 18px;
+    border:none;
+    background:#ff69b4;
+    color:white;
+    border-radius:25px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.close-btn:hover{
+    background:#ff1493;
+    transform:scale(1.05);
+}
+.floating-hearts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.bg-heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:20px;
+    opacity:0.5;
+    animation:floatBackground linear forwards;
+}
+
+@keyframes floatBackground{
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+
+@keyframes letterGlow{
+    from{ box-shadow:0 15px 30px rgba(255,105,180,0.2); }
+    to{ box-shadow:0 20px 40px rgba(255,105,180,0.6); }
+}
+
+
+</style>
+</head>
+<body>
+<div class="floating-hearts" id="floatingHearts"></div>
+<audio id="bgMusic" loop> <source src="music/love3.mp3" type="audio/mpeg"> </audio>
+<div class="envelope-container" id="wrapper" onclick="openEnvelope()">
+
+    <div class="envelope">
+        <div class="letter">
+            <h2>My Love 💕</h2>
+            <p>
+            Another year, another chapter of our beautiful story.
+            Through every laugh, every tear, and every challenge, you’ve been my constant. Loving you is the easiest and best decision I’ve ever made. Happy Anniversary to the one who owns my heart completely 💞
+            </p>
+            <button class="close-btn" onclick="goBack(event)">Close Letter 💌</button>
+        </div>
+    </div>
+
+    <div class="flap"></div>
+    <div class="seal">💖</div>
+
+</div>
+
+
+
+<script>
+
+const bgHearts = document.getElementById("floatingHearts");
+
+
+    function openEnvelope(){
+        document.getElementById("wrapper").classList.add("open");
+    }
+
+    function goBack(event){
+        event.stopPropagation();
+        window.location.href="main-menu.html";
+    }
+
+
+
+// Increase quantity (more frequent spawn)
+setInterval(()=>{
+    
+    // Create multiple hearts at once
+    for(let i=0; i<3; i++){
+
+        let heart = document.createElement("div");
+        heart.className = "bg-heart";
+
+        // Mix different heart styles
+        const heartsArray = ["💖","💗","💕","💘"];
+        heart.innerHTML = heartsArray[Math.floor(Math.random()*heartsArray.length)];
+
+        heart.style.left = Math.random()*100 + "%";
+        heart.style.fontSize = (Math.random()*25 + 15) + "px";
+        heart.style.animationDuration = (Math.random()*6 + 4) + "s";
+
+        bgHearts.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },10000);
+    }
+
+},300); // 🔥 was 700 — now 300 (more hearts)
+const music = document.getElementById("bgMusic");
+music.volume = 0;
+
+function fadeInMusic() {
+        music.volume = 0;
+        let volume = 0;
+        const fade = setInterval(() => {
+            if (volume < 1) {
+                volume += 0.05;
+                music.volume = volume;
+            } else {
+                clearInterval(fade);
+            }
+        }, 200);
+    }
+
+// Restore previous time
+    window.addEventListener("load", () => {
+        const savedTime = localStorage.getItem("musicTime");
+        if (savedTime) {
+            music.currentTime = savedTime;
+        }
+
+        const playPromise = music.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                fadeInMusic();
+            }).catch(() => {
+                // If autoplay blocked
+                document.body.addEventListener("click", () => {
+                    music.play();
+                    fadeInMusic();
+                }, { once: true });
+            });
+        }
+    });
+
+    // Save time before leaving
+    window.addEventListener("beforeunload", () => {
+        localStorage.setItem("musicTime", music.currentTime);
+    });
+
+</script>
+
+</body>
+</html>
