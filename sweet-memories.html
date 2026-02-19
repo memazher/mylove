@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Sweet Memories</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    font-family:'Quicksand', sans-serif;
+    background:#ffe6f0;
+    overflow-x:hidden;
+    transition:0.5s;
+}
+
+/* Night Mode */
+body.night{
+    background:#1a1a2e;
+    color:white;
+}
+
+body.night .content{
+    background:#2e2e4d;
+    color:white;
+}
+
+
+
+/* Title */
+h1{
+    text-align:center;
+    font-family:'Dancing Script', cursive;
+    color:#e91e63;
+    margin:40px 0;
+    font-size:clamp(28px, 8vw, 42px);
+    padding:0 15px;
+}
+
+
+/* Toggle button */
+.toggle{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#ff69b4;
+    border:none;
+    padding:8px 15px;
+    border-radius:20px;
+    color:white;
+    cursor:pointer;
+}
+
+/* Timeline */
+.timeline{
+    position:relative;
+    max-width:900px;
+    margin:auto;
+    padding:20px 0;
+}
+
+.timeline::after{
+    content:'';
+    position:absolute;
+    width:4px;
+    background:#ff99cc;
+    top:0;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+}
+
+/* Memory */
+.memory{
+    padding:20px 40px;
+    position:relative;
+    width:50%;
+    box-sizing:border-box;
+}
+
+/* LEFT SIDE */
+.memory.left{
+    left:0;
+    text-align:right;
+}
+
+/* RIGHT SIDE */
+.memory.right{
+    left:50%;
+    text-align:left;
+}
+
+/* Fix heart position */
+.memory.left::before{
+    right:-18px;
+}
+
+.memory.right::before{
+    left:-18px;
+}
+
+
+.memory::before{
+    content:"💖";
+    position:absolute;
+    top:30px;
+    right:-17px;
+    background:#ff69b4;
+    width:35px;
+    height:35px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:2;
+}
+
+.memory.right::before{
+    left:-17px;
+}
+
+/* Card */
+.content{
+    background:white;
+    padding:clamp(15px, 4vw, 20px);
+    border-radius:15px;
+    box-shadow:0 10px 25px rgba(255,105,180,0.2);
+    transition:0.4s;
+}
+
+
+.content:hover{
+    transform:scale(1.05);
+}
+
+/* Image inside card */
+.content img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:10px;
+    object-fit:contain;
+}
+
+/* Animated date */
+.date{
+    font-size:12px;
+    color:#ff69b4;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%{opacity:0.5;}
+    50%{opacity:1;}
+    100%{opacity:0.5;}
+}
+
+/* Back button */
+.back-btn{
+    display:block;
+    margin:40px auto;
+    padding:10px 20px;
+    background:#ff69b4;
+    color:white;
+    border:none;
+    border-radius:25px;
+    cursor:pointer;
+}
+/* Background Floating Hearts */
+.floating-hearts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.bg-heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:20px;
+    opacity:0.5;
+    animation:floatBackground linear forwards;
+}
+
+@keyframes floatBackground{
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+.perfect-text{
+    text-align:center;
+    max-width:600px;
+    margin:0 auto;
+    line-height:1.6;
+    font-size:clamp(13px, 3.5vw, 15px);
+}
+
+/* ========================= */
+/* MOBILE RESPONSIVE TIMELINE */
+/* ========================= */
+
+@media (max-width: 768px){
+
+    .timeline::after{
+        left:20px;
+        transform:none;
+    }
+
+    .memory{
+        width:100%;
+        padding:20px 20px 20px 60px;
+        text-align:left !important;
+    }
+
+    .memory.left,
+    .memory.right{
+        left:0;
+    }
+
+    .memory::before{
+        left:2px !important;
+        right:auto;
+    }
+
+    .content{
+        padding:15px;
+    }
+
+    .content img{
+        height:auto;
+        max-height:200px;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="floating-hearts" id="floatingHearts"></div>
+
+
+<button class="toggle" onclick="toggleNight()">🌙 Night Mode</button>
+
+<h1>Sweet Memories 💕</h1>
+<audio id="bgMusic" loop> <source src="music/love1.mp3" type="audio/mpeg"> </audio>
+<div class="timeline">
+
+    <div class="memory left">
+        <div class="content">
+            <img src="memories/img1.jpg">
+            <h3>First Meeting 🌸</h3>
+            <div class="date">October, 2022</div>
+            <p class="perfect-text">I still remember the first day we met. I don’t know why, but something about that moment felt different… special. The way you smiled, the way we talked — it all stayed with me. Maybe my heart knew right then that you were going to mean something important to me.</p>
+        </div>
+    </div>
+
+    <div class="memory right">
+        <div class="content">
+            <img src="memories/img2.jpg">
+            <h3>Rejection 😔</h3>
+            <div class="date">Aug 17, 2023</div>
+            <p class="perfect-text">When you first said no, I won’t lie… it broke my heart a little. But even then, my feelings for you didn’t change. I chose to respect your space and your decision, because what I feel for you has always been real. And today, when you said yes, it felt like a prayer finally answered. Maybe love isn’t about perfect timing — maybe it’s about never giving up on someone who truly matters to you. I’m so grateful we found our way back to each other.</p>
+        </div>
+    </div>
+
+    <div class="memory left">
+        <div class="content">
+            <img src="memories/img3.jpeg">
+            <h3>Finally ❤️</h3>
+            <div class="date">March 7, 2024</div>
+            <p class="perfect-text">There were days I wondered if we would ever make it here. But today, standing in this love with you, I realize every heartbreak, every delay, every struggle was just life preparing us for this beautiful ‘finally.</p>
+        </div>
+    </div>
+
+</div>
+
+<button class="back-btn" onclick="goBack()">Back to Main Menu 💌</button>
+
+<!-- Background Music -->
+ <!-- <audio autoplay loop id="music">
+    <source src="music/love1.mp3" type="audio/mp3">
+</audio> -->
+
+
+<script>
+const music = document.getElementById("bgMusic");
+music.volume = 0;
+function fadeInMusic() {
+        music.volume = 0;
+        let volume = 0;
+        const fade = setInterval(() => {
+            if (volume < 1) {
+                volume += 0.05;
+                music.volume = volume;
+            } else {
+                clearInterval(fade);
+            }
+        }, 200);
+    }
+
+// Restore previous time
+    window.addEventListener("load", () => {
+        const savedTime = localStorage.getItem("musicTime");
+        if (savedTime) {
+            music.currentTime = savedTime;
+        }
+
+        const playPromise = music.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                fadeInMusic();
+            }).catch(() => {
+                // If autoplay blocked
+                document.body.addEventListener("click", () => {
+                    music.play();
+                    fadeInMusic();
+                }, { once: true });
+            });
+        }
+    });
+
+    // Save time before leaving
+    window.addEventListener("beforeunload", () => {
+        localStorage.setItem("musicTime", music.currentTime);
+    });
+
+function goBack(){
+    window.location.href="main-menu.html";
+}
+
+/* Night Mode Toggle */
+function toggleNight(){
+    document.body.classList.toggle("night");
+}
+
+/* Floating Hearts Generator */
+/*const hearts = document.getElementById("hearts");*/
+
+function createHeart(){
+    const heart = document.createElement("span");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random()*100 + "vw";
+    heart.style.animationDuration = (5 + Math.random()*5) + "s";
+    heart.style.fontSize = (15 + Math.random()*20) + "px";
+    hearts.appendChild(heart);
+
+    setTimeout(()=>{heart.remove();},10000);
+}
+
+setInterval(createHeart,500);
+
+/* Lower music volume */
+/*document.getElementById("music").volume = 0.2;*/
+
+
+
+const bgHearts = document.getElementById("floatingHearts");
+
+// Increase quantity (more frequent spawn)
+setInterval(()=>{
+    
+    // Create multiple hearts at once
+    for(let i=0; i<3; i++){
+
+        let heart = document.createElement("div");
+        heart.className = "bg-heart";
+
+        // Mix different heart styles
+        const heartsArray = ["💖","💗","💕","💘"];
+        heart.innerHTML = heartsArray[Math.floor(Math.random()*heartsArray.length)];
+
+        heart.style.left = Math.random()*100 + "%";
+        heart.style.fontSize = (Math.random()*25 + 15) + "px";
+        heart.style.animationDuration = (Math.random()*6 + 4) + "s";
+
+        bgHearts.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },10000);
+    }
+
+},300); // 🔥 was 700 — now 300 (more hearts)
+
+</script>
+</body>
+</html>
