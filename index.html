@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Our Special Day</title>
+
+<!-- New Romantic Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    background: linear-gradient(135deg, #ffd6e8, #ffeaf4);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#c2185b;
+    font-family:'Quicksand', sans-serif;
+    text-align:center;
+    padding:20px;
+}
+
+.container{
+    background: rgba(255,255,255,0.7);
+    padding:40px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(255,105,180,0.2);
+    width:100%;
+    max-width:500px;
+}
+
+h1{
+    font-family:'Playfair Display', serif;
+    font-size:clamp(32px, 6vw, 50px);
+    margin-bottom:20px;
+}
+
+#countdown{
+    font-size:clamp(18px, 4vw, 28px);
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+input{
+    padding:12px;
+    border-radius:25px;
+    border:none;
+    width:100%;
+    max-width:260px;
+    text-align:center;
+    font-family:'Quicksand', sans-serif;
+    font-size:16px;
+    outline:none;
+}
+
+button{
+    padding:12px 25px;
+    border:none;
+    border-radius:25px;
+    background:#ff69b4;
+    color:white;
+    margin-top:15px;
+    cursor:pointer;
+    font-family:'Quicksand', sans-serif;
+    font-weight:600;
+    transition:0.3s;
+    width:100%;
+    max-width:200px;
+}
+
+button:hover{
+    background:#ff1493;
+}
+
+/*#hint{
+    margin-top:15px;
+    display:none;
+    font-weight:600;
+}*/
+
+#error{
+    margin-top:10px;
+    color:red;
+}
+
+/* Extra small devices */
+@media (max-width: 400px) {
+    .container{
+        padding:25px;
+        border-radius:20px;
+    }
+}
+/* Background Floating Hearts */
+.floating-hearts{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
+    overflow:hidden;
+    z-index:-1;
+}
+
+.bg-heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:20px;
+    opacity:0.5;
+    animation:floatBackground linear forwards;
+}
+
+@keyframes floatBackground{
+    to{
+        transform:translateY(-110vh);
+        opacity:0;
+    }
+}
+
+@keyframes fadePage{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+@keyframes gradientMove{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+#hint{
+    margin-top:15px;
+    font-weight:600;
+    transition:opacity 0.5s ease;
+}
+
+
+</style>
+</head>
+<body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+    <div class="container">
+
+        <h1>March 7 💖</h1>
+
+    <div id="countdown"></div>
+
+        <input type="password" id="password" placeholder="Enter the secret">
+        <br>
+        <button onclick="checkPassword()">Unlock Love</button>
+        <p id="hint"></p>
+        <p id="error"></p>
+
+    </div>
+
+<script>
+let targetDate = new Date("March 7, 2026 00:00:00").getTime();
+let countdownElement = document.getElementById("countdown");
+
+let timer = setInterval(function(){
+    let now = new Date().getTime();
+    let distance = targetDate - now;
+
+    if(distance > 0){
+        let days = Math.floor(distance / (1000*60*60*24));
+        let hours = Math.floor((distance % (1000*60*60*24))/(1000*60*60));
+        let minutes = Math.floor((distance % (1000*60*60))/(1000*60));
+        let seconds = Math.floor((distance % (1000*60))/1000);
+
+        countdownElement.innerHTML =
+            days + "d " + hours + "h "
+            + minutes + "m " + seconds + "s ";
+    } else {
+        clearInterval(timer);
+        countdownElement.innerHTML = "The Day Has Arrived 💕";
+        document.getElementById("hint").style.display = "block";
+    }
+},1000);
+
+function checkPassword(){
+    if(document.getElementById("password").value === "forever"){
+        window.location.href="main-menu.html";
+    } else {
+        document.getElementById("error").innerText="Wrong password 💔";
+    }
+}
+
+const bgHearts = document.getElementById("floatingHearts");
+
+setInterval(()=>{
+    
+    // Create multiple hearts at once
+    for(let i=0; i<3; i++){
+
+        let heart = document.createElement("div");
+        heart.className = "bg-heart";
+
+        // Mix different heart styles
+        const heartsArray = ["💖","💗","💕","💘"];
+        heart.innerHTML = heartsArray[Math.floor(Math.random()*heartsArray.length)];
+
+        heart.style.left = Math.random()*100 + "%";
+        heart.style.fontSize = (Math.random()*25 + 15) + "px";
+        heart.style.animationDuration = (Math.random()*6 + 4) + "s";
+
+        bgHearts.appendChild(heart);
+
+        setTimeout(()=>{
+            heart.remove();
+        },10000);
+    }
+
+},300);
+
+const hints = [
+    "Hint 1: The word we promised under the stars 💕",
+    "Hint 2: More than just today… much more 😉",
+    "Hint 3: It has 7 letters ✨",
+    "Hint 4: It describes eternal love 💖",
+    "Hint 5: We promised this to each other 💍",
+    "Hint 6: No ending, no goodbye 💞",
+    "Hint 7: Not temporary, not seasonal 🌸",
+    "Hint 8: A word lovers say ❤️",
+    "Hint 9: A promise with no expiry date 💌",
+    "Hint 10: The answer is closer than you think 💘"
+];
+
+let hintIndex = 0;
+const hintElement = document.getElementById("hint");
+
+// Show first hint immediately
+hintElement.innerText = hints[hintIndex];
+
+// Change hint every 3 seconds
+setInterval(() => {
+    hintIndex = (hintIndex + 1) % hints.length;
+    hintElement.innerText = hints[hintIndex];
+}, 3000); // 3000ms = 3 seconds
+hintElement.style.opacity = 0;
+
+setTimeout(() => {
+    hintElement.innerText = hints[hintIndex];
+    hintElement.style.opacity = 1;
+}, 500);
+
+</script>
+
+</body>
+</html>
